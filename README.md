@@ -1,5 +1,5 @@
 # bottomfeeder
-a simple rss reader in php and mysql
+a simple rss reader in php and mysql for those self-hosting types
 
 1. Set up a mysql table:
 
@@ -18,3 +18,5 @@ a simple rss reader in php and mysql
 2. Change config.php to use your mysql username and password.
 
 3. Add your feeds to feeds.php.
+
+![bottomfeeder](http://i.imgur.com/3IAr4mR.png)
