@@ -72,7 +72,7 @@ while ($row = $result->fetch_assoc()) {
 	$url = $row['url'];
 	$is_read = $row['is_read'];
 	$is_starred = $row['is_starred'];
-    $star_or_not = $is_starred ? '&#9733;' : '&#9734;';
+	$star_or_not = $is_starred ? '&#9733;' : '&#9734;';
 	if ($site !== $site_last) {
 		echo "<h3><a href='?site=$site'>$site</a></h3>";
 	}
