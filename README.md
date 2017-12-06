@@ -17,7 +17,7 @@ a simple rss reader in php and mysql for those self-hosting types
 
 2. Change config.php to use your mysql username and password.
 
-3. Add your feeds to feeds.php.
+3. Add your feeds to [feeds.php](https://github.com/travisred/bottomfeeder/blob/master/feeds.php).
 
 4. Run `php rss.php` to fetch new feed items.
 
