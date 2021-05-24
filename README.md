@@ -1,26 +1,44 @@
-# bottomfeeder
-a simple rss reader in php and mysql for those self-hosting types
+# RSS Reader
 
-1. Set up a mysql table:
+## Requirements
 
+- PHP
+- MySQL
 
-		CREATE TABLE IF NOT EXISTS `rss` (
-		  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-		  `title` text,
-		  `url` text,
-		  `site` text,
-		  `is_read` tinyint(1) DEFAULT NULL,
-		  `is_starred` tinyint(1) DEFAULT NULL,
-		  PRIMARY KEY (`id`)
-		) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2686 ;
+## Setup
 
+1. Set up a MySQL tables:
 
-2. Change config.php to use your mysql username and password.
+```sql
+CREATE TABLE IF NOT EXISTS `rss` (
+	`id` bigint(20) NOT NULL AUTO_INCREMENT,
+	`title` text,
+	`url` text,
+	`site` text,
+	`is_read` tinyint(1) DEFAULT NULL,
+	`is_starred` tinyint(1) DEFAULT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2686 ;
+```
 
-3. Add your feeds to [feeds.php](https://github.com/travisred/bottomfeeder/blob/master/feeds.php).
+```sql
+CREATE TABLE IF NOT EXISTS `feeds` (
+	`id` bigint(20) NOT NULL AUTO_INCREMENT,
+	`title` text,
+	`url` text,
+	PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2686 ;
+```
 
-4. Run `php rss.php` to fetch new feed items.
+2. Create a `config.php` file to use your mysql username and password.
 
-Hints: Clicking on the ID of the item to the left of the title marks that item as read. Clicking on the title of the site marks all of the site's items as read. Clicking on the star saves it in the starred items collection.
+```php
+$host = 'localhost:3306';
+$user = 'root';
+$password = 'password';
+$database = 'feedreader';
+```
 
-![bottomfeeder](http://i.imgur.com/3IAr4mR.png)
+1. Run `php rss.php` to fetch new feed items.
+
+## Screenshots

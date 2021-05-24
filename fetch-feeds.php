@@ -1,6 +1,8 @@
 <?php
 require('config.php');
-require('feeds.php');
+
+// @TODO
+// Get the feeds from the table
 
 $mysqli = new mysqli($host, $user, $password, $database);
 if ($mysqli->connect_errno) {

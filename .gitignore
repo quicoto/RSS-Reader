@@ -1,2 +1,5 @@
 .php_cs.cache
 config.php
+node_modules
+styles
+.DS_Store
