@@ -3,6 +3,7 @@
 require('_connection.php');
 
 $query = "SELECT * FROM rss where is_read = 0 order by site, id asc";
+
 if (isset($_GET['starred'])) {
     $query = "SELECT * FROM rss where is_starred = 1 order by site, id desc";
 }

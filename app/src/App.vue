@@ -3,7 +3,7 @@
     <b-container fluid>
       <b-row class="text-light pb-4 pt-4">
         <b-col cols="12" offset-md="3" md="9">
-          <h1 class="h3 m-0"><b-icon icon="rss-fill"></b-icon> RSS Reader</h1>
+          <h1 class="h3 m-0"><b-icon icon="rss-fill" class="mr-1"></b-icon> RSS Reader</h1>
         </b-col>
       </b-row>
       <b-row class="text-light pb-4">
@@ -20,7 +20,7 @@
             </li>
           </ul>
         </b-col>
-        <b-col cols="12" md="9">
+        <b-col cols="12" md="9" lg="7" xl="6">
           <div class="rounded bg-light text-dark p-3 mb-4">
             <router-view></router-view>
           </div>
@@ -48,4 +48,6 @@ export default {
 h1, h2, h3, h4, h5 {
   font-weight: 300 !important;
 }
+
+.pointer { cursor: pointer; }
 </style>

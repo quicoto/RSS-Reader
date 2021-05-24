@@ -1,3 +1,5 @@
 <?php
 
-$mysqli->query("update rss set is_read=1 where id=" . $id);
+require('_connection.php');
+
+$mysqli->query("update rss set is_starred=" . $_GET['is_starred'] . " where id=" . $_GET['id']);

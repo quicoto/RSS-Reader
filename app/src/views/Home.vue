@@ -2,10 +2,16 @@
   <div>
     <h1>Home</h1>
     <b-list-group>
-      <b-list-group-item v-for="item in items" v-bind:key="item.id">
-        <b-icon @click="updateStarred(item.id, '0')" icon="star-fill" v-if="item.is_starred === '1'"></b-icon>
-        <b-icon @click="updateStarred(item.id, '1')" icon="star" v-if="item.is_starred === '0'"></b-icon>
-        ({{ item.id }}) <a :href="item.url" target="_blank" rel="nofollow noopener">{{ item.title }}</a>
+      <b-list-group-item
+        v-for="item in items"
+        v-bind:key="item.id"
+        target="_blank"
+        :variant="itemColor(item)"
+        rel="nofollow noopener">
+        <strong class="d-block mb-2">{{ item.site }}</strong>
+        <b-icon class="mr-2 pointer" @click="updateStarred(item.id, '0')" icon="star-fill" v-if="item.is_starred === '1'"></b-icon>
+        <b-icon class="mr-2 pointer" @click="updateStarred(item.id, '1')" icon="star" v-if="item.is_starred === '0'"></b-icon>
+        <a :href="item.url" target="_blank" @click="goToItem($event, item.id)">{{ item.title }}</a>
       </b-list-group-item>
     </b-list-group>
   </div>
@@ -23,6 +29,21 @@ export default {
     }
   },
   methods: {
+    goToItem: function (event, id) {
+      const params = `?id=${id}`
+
+      fetch(`${window.rss_reader.apiUrl}${endpoints.updateRead}${params}`)
+        .then(() => {
+          // window.open(url, "_blank");
+          this.fetchResources();
+        });
+    },
+    itemColor: function(item) {
+      if (item.is_starred === '1') return 'warning'
+      if (item.is_read === '1') return 'secondary'
+
+      return ''
+    },
     fetchResources: function() {
       let endpoint = window.rss_reader.apiUrl
 
@@ -37,23 +58,12 @@ export default {
         });
     },
     updateStarred: function(id, value) {
-      const data = {
-        ID: id,
-        is_starred: value
-      };
-      const options = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      };
+      const params = `?id=${id}&is_starred=${value}`
 
-      fetch(`${window.rss_reader.apiUrl}${endpoints.updateStarred}`, options)
+      fetch(`${window.rss_reader.apiUrl}${endpoints.updateStarred}${params}`)
         .then(() => {
           this.fetchResources();
         });
-
     },
   },
   created: function() {
