@@ -10,7 +10,7 @@ $url = urldecode($_GET['url']);
 $xml = simplexml_load_file($url);
 
 $check_query = sprintf(
-  "SELECT URL FROM feeds WHERE url = '%s'",
+  "SELECT url FROM feeds WHERE url = '%s'",
        $mysqli->escape_string($url)
 );
 $check = $mysqli->query($check_query);

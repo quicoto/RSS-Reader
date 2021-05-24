@@ -11,7 +11,7 @@
         <strong class="d-block mb-2">{{ item.site }}</strong>
         <b-icon class="mr-2 pointer" @click="updateStarred(item.id, '0')" icon="star-fill" v-if="item.is_starred === '1'"></b-icon>
         <b-icon class="mr-2 pointer" @click="updateStarred(item.id, '1')" icon="star" v-if="item.is_starred === '0'"></b-icon>
-        <a :href="item.url" target="_blank" @click="goToItem($event, item.id)">{{ item.title }}</a>
+        <a class="feed-item" :href="item.url" target="_blank" @click="goToItem($event, item.id)">{{ item.title }}</a>
       </b-list-group-item>
     </b-list-group>
   </div>
@@ -71,3 +71,7 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.feed-item { font-size: 1.2rem; }
+</style>

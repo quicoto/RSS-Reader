@@ -89,6 +89,8 @@ export default {
             this.addFail = false;
             this.addSuccess = true;
           }
+
+          this.newFeedUrl = '';
         });
     }
   }

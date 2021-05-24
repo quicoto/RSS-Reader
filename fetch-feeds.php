@@ -9,8 +9,13 @@ if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
 
-foreach ($feeds as $name => $feed) {
-    $xml = simplexml_load_file($feed);
+$max_items = 10;
+
+$feeds_query = "SELECT * FROM feeds";
+$feeds = $mysqli->query($feeds_query);
+
+while ($feed = $feeds->fetch_assoc()) {
+    $xml = simplexml_load_file($feed['url']);
     $items = $xml->channel->item;
     if (empty($items)) {
         $items = $xml->entry;
@@ -18,7 +23,7 @@ foreach ($feeds as $name => $feed) {
     if (empty($items)) {
         $items = $xml->item;
     }
-    for ($i = 0; $i < count($items); $i++) {
+    for ($i = 0; $i < $max_items; $i++) {
         $link = $items[$i]->link;
         if (strpos($link, 'http') === false) {
             $link = $items[$i]->link->attributes();
@@ -36,7 +41,7 @@ foreach ($feeds as $name => $feed) {
                 "INSERT INTO rss (title, url, site, is_read, is_starred) VALUES ('%s', '%s', '%s', 0, 0)",
                  $mysqli->escape_string($items[$i]->title),
                  $mysqli->escape_string($link),
-                 $mysqli->escape_string($name)
+                 $mysqli->escape_string($xml->channel->title)
             );
             $mysqli->query($insert);
         }
