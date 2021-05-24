@@ -12,6 +12,14 @@ const router = new Router({
       meta: {
         title: 'Home',
       },
+    },
+    {
+      path: '/feeds',
+      name: 'feeds',
+      component: () => import('./views/Feeds.vue'),
+      meta: {
+        title: 'Feeds',
+      },
     }
   ],
 });

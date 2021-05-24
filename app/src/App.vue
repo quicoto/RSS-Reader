@@ -7,20 +7,44 @@
         </b-col>
       </b-row>
       <b-row class="text-light pb-4">
-        <b-col cols="12" md="3">
+        <b-col cols="12" md="3" lg="2" class="mb-3">
           <ul>
             <li>
-              <a href="<?=$site_path?>/index.php?starred=1">Starred</a>
+              <a href="<?=$site_path?>/index.php?starred=1">Starred only</a>
             </li>
             <li>
-              <a href="<?=$site_path?>/index.php?unread=1">Unread</a>
+              <a href="<?=$site_path?>/index.php?unread=1">Unread only</a>
             </li>
             <li>
-              <a href="<?=$site_path?>/index.php?all=1">All</a>
+              <a href="<?=$site_path?>/index.php?all=1">All item</a>
+            </li>
+            <li>
+              Feeds
             </li>
           </ul>
+
+           <b-form @submit="onSubmit">
+            <b-form-group
+              id="input-group-1"
+              label="Add new feed"
+              label-for="feed-url"
+            >
+              <b-form-input
+                id="feed-url"
+                v-model="newFeedUrl"
+                type="url"
+                placeholder="example.com/rss.xml"
+                required
+              ></b-form-input>
+            </b-form-group>
+
+            <b-alert :show="addSuccess" variant="success">Feed has been added</b-alert>
+            <b-alert :show="addFail" variant="danger">Feed was already added</b-alert>
+
+            <b-button type="submit" block variant="primary">Add feed</b-button>
+          </b-form>
         </b-col>
-        <b-col cols="12" md="9" lg="7" xl="6">
+        <b-col cols="12" offset-lg="1" md="9" lg="7" xl="6">
           <div class="rounded bg-light text-dark p-3 mb-4">
             <router-view></router-view>
           </div>
@@ -36,8 +60,38 @@
 </template>
 
 <script>
+import { endpoints } from '@/values';
+
 export default {
-  name: 'App'
+  name: 'App',
+  data: function () {
+    return {
+      newFeedUrl: '',
+      addSuccess: false,
+      addFail: false,
+    }
+  },
+  methods: {
+    onSubmit: function (event) {
+      event.preventDefault();
+
+      const params = `?url=${encodeURIComponent(this.newFeedUrl)}`
+
+      fetch(`${window.rss_reader.apiUrl}${endpoints.addFeed}${params}`)
+        .then(response => response.json())
+        .then((data) => {
+          if (data === 0) {
+            this.addFail = true;
+            this.addSuccess = false;
+          }
+
+          if (data === 1) {
+            this.addFail = false;
+            this.addSuccess = true;
+          }
+        });
+    }
+  }
 }
 </script>
 
