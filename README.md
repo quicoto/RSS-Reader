@@ -17,11 +17,11 @@
 1. Set up a MySQL tables:
 
 ```sql
-CREATE TABLE IF NOT EXISTS `rss` (
+CREATE TABLE IF NOT EXISTS `items` (
 	`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`title` text,
 	`url` text,
-	`site` text,
+	`feed_id` bigint(20) NOT NULL,
 	`is_read` tinyint(1) DEFAULT NULL,
 	`is_starred` tinyint(1) DEFAULT NULL,
 	PRIMARY KEY (`id`)
