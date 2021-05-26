@@ -2,47 +2,47 @@
   <div class="app">
     <b-container fluid>
       <b-row class="text-light pb-4 pt-4">
-        <b-col cols="12" offset-md="3" md="9">
-          <h1 class="h3 m-0"><b-icon icon="rss-fill" class="mr-1"></b-icon> RSS Reader</h1>
+        <b-col cols="9" offset-md="3" md="9">
+          <h1 class="h3 m-0">
+            <b-icon icon="rss-fill" class="mr-1 site-icon"></b-icon>
+            <router-link to="/" class="text-white text-decoration-none">RSS Reader</router-link>
+          </h1>
+        </b-col>
+        <b-col cols="3" class="d-block d-md-none text-right">
+          <b-icon v-show="!isNavigationOpen" @click="isNavigationOpen = !isNavigationOpen" font-scale="2" icon="justify"></b-icon>
+          <b-icon v-show="isNavigationOpen" @click="isNavigationOpen = !isNavigationOpen" font-scale="2" icon="plus" class="close-navigation"></b-icon>
         </b-col>
       </b-row>
       <b-row class="text-light pb-4">
-        <b-col cols="12" md="3" lg="2" class="mb-3">
-          <ul>
-            <li>
-              <a href="<?=$site_path?>/index.php?starred=1">Starred only</a>
-            </li>
-            <li>
-              <a href="<?=$site_path?>/index.php?unread=1">Unread only</a>
-            </li>
-            <li>
-              <a href="<?=$site_path?>/index.php?all=1">All item</a>
-            </li>
-            <li>
-              Feeds
-            </li>
-          </ul>
+        <b-col cols="12" md="3" lg="2" class="mb-3 navigation" v-show="isNavigationOpen">
+          <h5>Filter</h5>
+          <b-list-group class="mb-4">
+            <b-list-group-item variant="primary" to="<?=$site_path?>/index.php?unread=1">Unread only</b-list-group-item>
+            <b-list-group-item variant="warning" to="<?=$site_path?>/index.php?starred=1">Starred only</b-list-group-item>
+            <b-list-group-item variant="info" to="<?=$site_path?>/index.php?all=1">All items</b-list-group-item>
+          </b-list-group>
 
-           <b-form @submit="onSubmit">
-            <b-form-group
-              id="input-group-1"
-              label="Add new feed"
-              label-for="feed-url"
-            >
-              <b-form-input
-                id="feed-url"
-                v-model="newFeedUrl"
-                type="url"
-                placeholder="example.com/rss.xml"
-                required
-              ></b-form-input>
-            </b-form-group>
+          <h5>Add new feed</h5>
+          <b-form @submit="onSubmit" class="mb-4">
+            <b-form-input
+              id="feed-url"
+              v-model="newFeedUrl"
+              type="url"
+              placeholder="example.com/rss.xml"
+              required
+              class="mb-2"
+            ></b-form-input>
 
-            <b-alert :show="addSuccess" variant="success">Feed has been added</b-alert>
-            <b-alert :show="addFail" variant="danger">Feed was already added</b-alert>
+            <b-alert class="mb-2" :show="addSuccess" variant="success"><b-icon icon="emoji-smile" class="mr-1"></b-icon> Feed has been added</b-alert>
+            <b-alert class="mb-2" :show="addFail" variant="danger"><b-icon icon="emoji-wink" class="mr-1"></b-icon> Feed was already added</b-alert>
 
             <b-button type="submit" block variant="primary">Add feed</b-button>
           </b-form>
+
+          <router-link to="/" class="text-white text-decoration-none">
+            <b-icon icon="gear-fill" class="mr-1"></b-icon>
+            Manage Feeds
+          </router-link>
         </b-col>
         <b-col cols="12" offset-lg="1" md="9" lg="7" xl="6">
           <div class="rounded bg-light text-dark p-3 mb-4">
@@ -69,6 +69,7 @@ export default {
       newFeedUrl: '',
       addSuccess: false,
       addFail: false,
+      isNavigationOpen: false
     }
   },
   methods: {
@@ -106,4 +107,18 @@ h1, h2, h3, h4, h5 {
 }
 
 .pointer { cursor: pointer; }
+
+.site-icon {
+  background: white;
+  border-radius: 15px;
+  color: #f39c12;
+}
+
+.close-navigation {
+  transform: rotate(45deg);
+}
+
+@media (min-width: 768px) {
+  .navigation { display: block !important; }
+}
 </style>

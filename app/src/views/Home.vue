@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Home</h1>
+    <h1 class="h2 mb-3">Home</h1>
     <b-list-group>
       <b-list-group-item
         v-for="item in items"
