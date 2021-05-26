@@ -1,5 +1,6 @@
 <?php
 require('../config.php');
+require('../values.php');
 
 $mysqli = new mysqli($host, $user, $password, $database);
 if ($mysqli->connect_errno) {
@@ -22,21 +23,21 @@ if (isset($_GET['mark-read'])
     }
     if (isset($_GET['mark-unread'])) {
         $id = $_GET['mark-unread'];
-        $mysqli->query("update rss set is_read=0 where id=" . $id);
+        $mysqli->query("update ". $table_items . "  set is_read=0 where id=" . $id);
     }
     if (isset($_GET['site'])) {
         $site = $_GET['site'];
-        $mysqli->query("update rss set is_read = 1 where site = '$site' and is_read = 0");
+        $mysqli->query("update ". $table_items . "  set is_read = 1 where site = '$site' and is_read = 0");
         header('Location: /fetch-feeds');
     }
     if (isset($_GET['star'])) {
         $id = $_GET['star'];
-        $result = $mysqli->query("select id, is_starred from rss where id = $id");
+        $result = $mysqli->query("select id, is_starred from ". $table_items . "  where id = $id");
         $result->data_seek(0);
         $row = $result->fetch_assoc();
         $is_starred = $row['is_starred'];
         $toggle_star = $is_starred ? 0 : 1;
-        $mysqli->query("update rss set is_starred = $toggle_star where id = $id");
+        $mysqli->query("update ". $table_items . "  set is_starred = $toggle_star where id = $id");
     }
     header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit;

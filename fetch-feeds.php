@@ -1,8 +1,6 @@
 <?php
 require('config.php');
-
-// @TODO
-// Get the feeds from the table
+require('values.php');
 
 $mysqli = new mysqli($host, $user, $password, $database);
 if ($mysqli->connect_errno) {
@@ -11,7 +9,7 @@ if ($mysqli->connect_errno) {
 
 $max_items = 10;
 
-$feeds_query = "SELECT * FROM feeds";
+$feeds_query = "SELECT * FROM " . $table_feeds;
 $feeds = $mysqli->query($feeds_query);
 
 while ($feed = $feeds->fetch_assoc()) {
@@ -30,20 +28,20 @@ while ($feed = $feeds->fetch_assoc()) {
             $link = $link['href'];
         }
         $check_query = sprintf(
-            "SELECT URL FROM rss WHERE url = '%s'",
+            "SELECT URL FROM ". $table_items . "  WHERE url = '%s'",
                  $mysqli->escape_string($link)
         );
         $check = $mysqli->query($check_query);
-        $check->data_seek(0);
         $row = $check->fetch_assoc();
         if (empty($row)) {
             $insert = sprintf(
-                "INSERT INTO rss (title, url, site, is_read, is_starred) VALUES ('%s', '%s', '%s', 0, 0)",
+                "INSERT INTO ". $table_items . " (title, url, feed_id, is_read, is_starred) VALUES ('%s', '%s', '%s', 0, 0)",
                  $mysqli->escape_string($items[$i]->title),
                  $mysqli->escape_string($link),
-                 $mysqli->escape_string($xml->channel->title)
+                 $feed['id']
             );
             $mysqli->query($insert);
+            echo $mysqli->escape_string($link) . "<br>";
         }
     }
 }

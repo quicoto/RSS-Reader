@@ -1,17 +1,18 @@
 <?php
 
 require('_connection.php');
+require('../values.php');
 
-$query = "SELECT * FROM rss where is_read = 0 order by site, id asc";
+$query = "SELECT * FROM ". $table_items . " where is_read = 0 order by feed_id, id asc";
 
 if (isset($_GET['starred'])) {
-    $query = "SELECT * FROM rss where is_starred = 1 order by site, id desc";
+    $query = "SELECT * FROM ". $table_items . " where is_starred = 1 order by feed_id, id desc";
 }
 if (isset($_GET['all'])) {
-    $query = "SELECT * FROM rss order by site, id desc";
+    $query = "SELECT * FROM ". $table_items . " order by feed_id, id desc";
 }
 if (isset($_GET['search'])) {
-    $query = "SELECT * FROM rss where title like '%{$_GET['search']}%' order by site, id desc";
+    $query = "SELECT * FROM ". $table_items . " where title like '%{$_GET['search']}%' order by feed_id, id desc";
 }
 
 $result = $mysqli->query($query);
