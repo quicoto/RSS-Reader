@@ -1,7 +1,7 @@
 <?php
 
-require('_connection.php');
-require('../values.php');
+require(__DIR__.'/_connection.php');
+require(__DIR__.'/../values.php');
 
 $url = urldecode($_GET['url']);
 

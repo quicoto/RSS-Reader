@@ -1,7 +1,7 @@
 <?php
 
-require('_connection.php');
-require('../values.php');
+require(__DIR__.'/_connection.php');
+require(__DIR__.'/../values.php');
 
 $query = "SELECT ".$table_items.".*, ".$table_feeds.".title as feed_title from ".$table_items." inner join ".$table_feeds." on ".$table_items.".feed_id = ".$table_feeds.".id where is_read = 0 order by feed_id, id asc";
 
