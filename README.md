@@ -41,6 +41,8 @@ CREATE TABLE IF NOT EXISTS `feeds` (
 2. Create a `config.php` file to use your mysql username and password.
 
 ```php
+<?php
+
 $host = 'localhost:3306';
 $user = 'root';
 $password = 'password';
