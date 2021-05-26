@@ -1,19 +1,26 @@
 <template>
   <div>
-    <h1>Home</h1>
-    <b-list-group>
-      <b-list-group-item
-        v-for="item in items"
-        v-bind:key="item.id"
-        target="_blank"
-        :variant="itemColor(item)"
-        rel="nofollow noopener">
-        <strong class="d-block mb-2">{{ item.site }}</strong>
-        <b-icon class="mr-2 pointer" @click="updateStarred(item.id, '0')" icon="star-fill" v-if="item.is_starred === '1'"></b-icon>
-        <b-icon class="mr-2 pointer" @click="updateStarred(item.id, '1')" icon="star" v-if="item.is_starred === '0'"></b-icon>
-        <a :href="item.url" target="_blank" @click="goToItem($event, item.id)">{{ item.title }}</a>
-      </b-list-group-item>
-    </b-list-group>
+    <b-overlay
+      :show="showLoading"
+      spinner-variant="dark"
+      spinner-type="grow"
+      spinner-small
+      rounded="sm"
+    >
+      <h1>Feeds</h1>
+      <b-list-group>
+        <b-list-group-item
+          class="d-flex justify-content-between align-items-center"
+          v-for="feed in feeds"
+          v-bind:key="feed.id">
+         <span>
+           {{ feed.title }}
+           {{ feed.url }}
+         </span>
+         <b-button variant="danger" @click="deleteFeed(feed.id)">Delete</b-button>
+        </b-list-group-item>
+      </b-list-group>
+    </b-overlay>
   </div>
 </template>
 
@@ -24,43 +31,25 @@ export default {
   name: 'Feeds',
   data: function() {
     return {
-      items: [],
+      feeds: [],
       showLoading: true
     }
   },
   methods: {
-    goToItem: function (event, id) {
-      const params = `?id=${id}`
-
-      fetch(`${window.rss_reader.apiUrl}${endpoints.updateRead}${params}`)
-        .then(() => {
-          // window.open(url, "_blank");
-          this.fetchResources();
-        });
-    },
-    itemColor: function(item) {
-      if (item.is_starred === '1') return 'warning'
-      if (item.is_read === '1') return 'secondary'
-
-      return ''
-    },
     fetchResources: function() {
-      let endpoint = window.rss_reader.apiUrl
-
-      endpoint += `${endpoints.items}`
-
       this.showLoading = true;
 
-      fetch(endpoint)
+      fetch(`${window.rss_reader.apiUrl}${endpoints.feeds}`)
         .then(response => response.json())
-        .then(items => {
-          this.items = items;
+        .then(feeds => {
+          this.feeds = feeds;
+          this.showLoading = false;
         });
     },
-    updateStarred: function(id, value) {
-      const params = `?id=${id}&is_starred=${value}`
+    deleteFeed: function(id) {
+      const params = `?id=${id}`
 
-      fetch(`${window.rss_reader.apiUrl}${endpoints.updateStarred}${params}`)
+      fetch(`${window.rss_reader.apiUrl}${endpoints.deleteFeed}${params}`)
         .then(() => {
           this.fetchResources();
         });

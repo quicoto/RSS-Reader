@@ -1,19 +1,26 @@
 <template>
   <div>
-    <h1 class="h2 mb-3">Home</h1>
-    <b-list-group>
-      <b-list-group-item
-        v-for="item in items"
-        v-bind:key="item.id"
-        target="_blank"
-        :variant="itemColor(item)"
-        rel="nofollow noopener">
-        <strong class="d-block mb-2">{{ item.site }}</strong>
-        <b-icon class="mr-2 pointer" @click="updateStarred(item.id, '0')" icon="star-fill" v-if="item.is_starred === '1'"></b-icon>
-        <b-icon class="mr-2 pointer" @click="updateStarred(item.id, '1')" icon="star" v-if="item.is_starred === '0'"></b-icon>
-        <a class="feed-item" :href="item.url" target="_blank" @click="goToItem($event, item.id)">{{ item.title }}</a>
-      </b-list-group-item>
-    </b-list-group>
+    <b-overlay
+      :show="showLoading"
+      spinner-variant="dark"
+      spinner-type="grow"
+      rounded="sm"
+    >
+      <h1 class="h2 mb-3">{{ this.title }}</h1>
+      <b-list-group>
+        <b-list-group-item
+          v-for="item in items"
+          v-bind:key="item.id"
+          target="_blank"
+          :variant="itemColor(item)"
+          rel="nofollow noopener">
+          <strong class="d-block mb-2">{{ item.feed_title }}</strong>
+          <b-icon class="mr-2 pointer" @click="updateStarred(item.id, '0')" icon="star-fill" v-if="item.is_starred === '1'"></b-icon>
+          <b-icon class="mr-2 pointer" @click="updateStarred(item.id, '1')" icon="star" v-if="item.is_starred === '0'"></b-icon>
+          <a class="feed-item" :href="item.url" target="_blank" @click="goToItem($event, item.id)">{{ item.title }}</a>
+        </b-list-group-item>
+      </b-list-group>
+    </b-overlay>
   </div>
 </template>
 
@@ -22,6 +29,7 @@ import { endpoints } from '@/values';
 
 export default {
   name: 'Home',
+  props: ['starred', 'title', 'all'],
   data: function() {
     return {
       items: [],
@@ -34,7 +42,6 @@ export default {
 
       fetch(`${window.rss_reader.apiUrl}${endpoints.updateRead}${params}`)
         .then(() => {
-          // window.open(url, "_blank");
           this.fetchResources();
         });
     },
@@ -45,16 +52,21 @@ export default {
       return ''
     },
     fetchResources: function() {
-      let endpoint = window.rss_reader.apiUrl
+      let params = `?`
 
-      endpoint += `${endpoints.items}`
+      if (this.starred) {
+        params += `starred=1`
+      } else if (this.all) {
+        params += `all=1`
+      }
 
       this.showLoading = true;
 
-      fetch(endpoint)
+      fetch(`${window.rss_reader.apiUrl}${endpoints.items}${params}`)
         .then(response => response.json())
         .then(items => {
           this.items = items;
+          this.showLoading = false;
         });
     },
     updateStarred: function(id, value) {
@@ -68,6 +80,11 @@ export default {
   },
   created: function() {
     this.fetchResources();
+  },
+  watch: {
+    $route() {
+      this.fetchResources();
+    }
   }
 }
 </script>

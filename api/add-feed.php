@@ -1,8 +1,7 @@
 <?php
 
-
-
 require('_connection.php');
+require('../values.php');
 
 $url = urldecode($_GET['url']);
 

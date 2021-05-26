@@ -3,16 +3,13 @@
 require('_connection.php');
 require('../values.php');
 
-$query = "SELECT * FROM ". $table_items . " where is_read = 0 order by feed_id, id asc";
+$query = "SELECT ".$table_items.".*, ".$table_feeds.".title as feed_title from ".$table_items." inner join ".$table_feeds." on ".$table_items.".feed_id = ".$table_feeds.".id where is_read = 0 order by feed_id, id asc";
 
 if (isset($_GET['starred'])) {
-    $query = "SELECT * FROM ". $table_items . " where is_starred = 1 order by feed_id, id desc";
+    $query = "SELECT ".$table_items.".*, ".$table_feeds.".title as feed_title from ".$table_items." inner join ".$table_feeds." on ".$table_items.".feed_id = ".$table_feeds.".id where is_starred = 1 order by feed_id, id asc";
 }
 if (isset($_GET['all'])) {
-    $query = "SELECT * FROM ". $table_items . " order by feed_id, id desc";
-}
-if (isset($_GET['search'])) {
-    $query = "SELECT * FROM ". $table_items . " where title like '%{$_GET['search']}%' order by feed_id, id desc";
+    $query = "SELECT ".$table_items.".*, ".$table_feeds.".title as feed_title from ".$table_items." inner join ".$table_feeds." on ".$table_items.".feed_id = ".$table_feeds.".id order by feed_id, id asc";
 }
 
 $result = $mysqli->query($query);

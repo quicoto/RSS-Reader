@@ -4,8 +4,8 @@
       <b-row class="text-light pb-4 pt-4">
         <b-col cols="9" offset-md="3" md="9">
           <h1 class="h3 m-0">
-            <b-icon icon="rss-fill" class="mr-1 site-icon"></b-icon>
-            <router-link to="/" class="text-white text-decoration-none">RSS Reader</router-link>
+            <b-icon icon="rss-fill" class="mr-2 site-icon"></b-icon>
+            <a href="/" class="text-white text-decoration-none">RSS Reader</a>
           </h1>
         </b-col>
         <b-col cols="3" class="d-block d-md-none text-right">
@@ -15,34 +15,7 @@
       </b-row>
       <b-row class="text-light pb-4">
         <b-col cols="12" md="3" lg="2" class="mb-3 navigation" v-show="isNavigationOpen">
-          <h5>Filter</h5>
-          <b-list-group class="mb-4">
-            <b-list-group-item variant="primary" to="<?=$site_path?>/index.php?unread=1">Unread only</b-list-group-item>
-            <b-list-group-item variant="warning" to="<?=$site_path?>/index.php?starred=1">Starred only</b-list-group-item>
-            <b-list-group-item variant="info" to="<?=$site_path?>/index.php?all=1">All items</b-list-group-item>
-          </b-list-group>
-
-          <h5>Add new feed</h5>
-          <b-form @submit="onSubmit" class="mb-4">
-            <b-form-input
-              id="feed-url"
-              v-model="newFeedUrl"
-              type="url"
-              placeholder="example.com/rss.xml"
-              required
-              class="mb-2"
-            ></b-form-input>
-
-            <b-alert class="mb-2" :show="addSuccess" variant="success"><b-icon icon="emoji-smile" class="mr-1"></b-icon> Feed has been added</b-alert>
-            <b-alert class="mb-2" :show="addFail" variant="danger"><b-icon icon="emoji-wink" class="mr-1"></b-icon> Feed was already added</b-alert>
-
-            <b-button type="submit" block variant="primary">Add feed</b-button>
-          </b-form>
-
-          <router-link to="/" class="text-white text-decoration-none">
-            <b-icon icon="gear-fill" class="mr-1"></b-icon>
-            Manage Feeds
-          </router-link>
+          <Sidebar />
         </b-col>
         <b-col cols="12" offset-lg="1" md="9" lg="7" xl="6">
           <div class="rounded bg-light text-dark p-3 mb-4">
@@ -60,39 +33,16 @@
 </template>
 
 <script>
-import { endpoints } from '@/values';
+import Sidebar from './components/Sidebar.vue'
 
 export default {
   name: 'App',
+  components: {
+    Sidebar
+  },
   data: function () {
     return {
-      newFeedUrl: '',
-      addSuccess: false,
-      addFail: false,
       isNavigationOpen: false
-    }
-  },
-  methods: {
-    onSubmit: function (event) {
-      event.preventDefault();
-
-      const params = `?url=${encodeURIComponent(this.newFeedUrl)}`
-
-      fetch(`${window.rss_reader.apiUrl}${endpoints.addFeed}${params}`)
-        .then(response => response.json())
-        .then((data) => {
-          if (data === 0) {
-            this.addFail = true;
-            this.addSuccess = false;
-          }
-
-          if (data === 1) {
-            this.addFail = false;
-            this.addSuccess = true;
-          }
-
-          this.newFeedUrl = '';
-        });
     }
   }
 }

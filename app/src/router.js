@@ -10,8 +10,39 @@ const router = new Router({
       name: 'home',
       component: () => import('./views/Home.vue'),
       meta: {
-        title: 'Home',
+        title: 'Latest items',
       },
+      props: {
+        starred: false,
+        unread: false,
+        title: 'Latest items'
+      }
+    },
+    {
+      path: '/starred',
+      name: 'starred',
+      component: () => import('./views/Home.vue'),
+      meta: {
+        title: 'Starred items',
+      },
+      props: {
+        starred: true,
+        unread: false,
+        title: 'Starred items'
+      }
+    },
+    {
+      path: '/all',
+      name: 'all',
+      component: () => import('./views/Home.vue'),
+      meta: {
+        title: 'All items',
+      },
+      props: {
+        starred: false,
+        all: true,
+        title: 'All items'
+      }
     },
     {
       path: '/feeds',
