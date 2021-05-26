@@ -1,6 +1,6 @@
 <?php
-require(__DIR__.'_connection.php');
-require(__DIR__.'../values.php');
+require(__DIR__.'/_connection.php');
+require(__DIR__.'/../values.php');
 
 if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
