@@ -1,12 +1,10 @@
 <?php
-require('config.php');
-require('values.php');
+require('_connection.php');
+require('../values.php');
 
 if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
-
-$max_items = 10;
 
 $feeds_query = "SELECT * FROM " . $table_feeds;
 $feeds = $mysqli->query($feeds_query);
@@ -20,7 +18,7 @@ while ($feed = $feeds->fetch_assoc()) {
     if (empty($items)) {
         $items = $xml->item;
     }
-    for ($i = 0; $i < $max_items; $i++) {
+    for ($i = 0; $i < $fetch_feed_items_max_items; $i++) {
         $link = $items[$i]->link;
         if (strpos($link, 'http') === false) {
             $link = $items[$i]->link->attributes();
