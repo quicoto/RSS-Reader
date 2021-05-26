@@ -1,6 +1,6 @@
 <?php
-require(__DIR__ . '/../config.php');
-require(__DIR__ . '/../values.php');
+require('../config.php');
+require('../values.php');
 
 $mysqli = new mysqli($host, $user, $password, $database);
 if ($mysqli->connect_errno) {
