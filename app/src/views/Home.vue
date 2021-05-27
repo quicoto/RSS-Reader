@@ -8,12 +8,16 @@
     >
       <div class="d-flex justify-content-between align-items-center">
         <h1 class="h2 mb-3">{{ this.title }}</h1>
-        <b-button variant="success" @click="markAllAsRead()">
+        <b-button variant="success" @click="markAllAsRead()" v-show="items.length > 0">
           Read all
           <b-icon class="mr-1" icon="check"></b-icon>
         </b-button>
       </div>
-      <b-list-group>
+      <b-alert class="mb-2" :show="items.length === 0" variant="success">
+        <b-icon class="mr-1" icon="emoji-sunglasses"></b-icon>
+        No items to read, come back later.
+      </b-alert>
+      <b-list-group v-if="items.length > 0">
         <b-list-group-item
           class="d-md-flex justify-content-between align-items-center"
           v-for="item in items"
