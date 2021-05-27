@@ -1,4 +1,7 @@
 # RSS Reader
+
+![Screenshot](https://cldup.com/H43vRNLgta.png)
+
 ## Requirements
 
 - PHP
@@ -41,6 +44,5 @@ $password = 'password';
 $database = 'feedreader';
 ```
 
-1. Run `php rss.php` to fetch new feed items.
-
-## Screenshots
+3. Run `php api/fetch-feeds.php` to fetch new feed items. Ideally you should add a cronjob to automatically pull items.
+4. You can also set up a cronjob to delete items  `php api/delete-old-items.php` items.
