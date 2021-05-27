@@ -29,7 +29,7 @@ while ($feed = $feeds->fetch_assoc()) {
         continue;
     }
     for ($i = 0; $i < $fetch_feed_items_max_items; $i++) {
-        if (empty($items[$i]) || $items[$i]->link) { continue; }
+        if (empty($items[$i]) || empty($items[$i]->link)) { continue; }
         $link = $items[$i]->link;
         if (strpos($link, 'http') === false) {
             $link = $items[$i]->link->attributes();
