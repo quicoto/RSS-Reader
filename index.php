@@ -1,3 +1,6 @@
+<?php
+$version = "1.0.1";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home- RSS Reader</title>
-  <link rel="stylesheet" href="app/dist/app.css">
+  <link rel="stylesheet" href="app/dist/app.css?ver=<?=$version?>">
 
     <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32x32.png">
@@ -22,6 +25,6 @@
         }
     </script>
     <main id="app"></main>
-    <script src="app/dist/app.js" defer></script>
+    <script src="app/dist/app.js?ver=<?=$version?>" defer></script>
 </body>
 </html>

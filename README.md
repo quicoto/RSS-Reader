@@ -1,12 +1,4 @@
 # RSS Reader
-
-## To DO
-
-- Add timestamps to RSS table
-- Create delete feeds for purging the database
-- Route for deleting feeds
-- Filter items (read, unread, starred)
-
 ## Requirements
 
 - PHP
