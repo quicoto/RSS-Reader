@@ -5,7 +5,9 @@
         <b-col cols="9" offset-md="3" md="9">
           <h1 class="h3 m-0">
             <b-icon icon="rss-fill" class="mr-2 site-icon"></b-icon>
-            <a href="/" class="text-white text-decoration-none">RSS Reader</a>
+            <router-link to="/" class="text-white text-decoration-none">
+              RSS Reader
+            </router-link>
           </h1>
         </b-col>
         <b-col cols="3" class="d-block d-md-none text-right">
