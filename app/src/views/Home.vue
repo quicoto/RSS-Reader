@@ -7,7 +7,7 @@
       rounded="sm"
     >
       <div class="d-flex justify-content-between align-items-center">
-        <h1 class="h2 mb-3">{{ this.title }}</h1>
+        <h1 class="h2 mb-3">{{ this.title }} <span v-if="items.length > 0">({{items.length}})</span></h1>
         <b-button variant="success" @click="markAllAsRead()" v-show="items.length > 0">
           Read all
           <b-icon class="mr-1" icon="check"></b-icon>
