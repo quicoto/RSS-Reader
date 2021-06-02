@@ -26,11 +26,12 @@
           :variant="itemColor(item)"
           rel="nofollow noopener">
           <span class="d-block mb-3 mb-md-0 item-text-wrapper">
-            <strong class="d-block mb-2">{{ item.feed_title }}</strong>
+            <strong class="d-block mb-2">{{ item.feed_title }} <small>{{ itemDate(item.date) }}</small></strong>
             <span class="d-flex align-items-top">
               <b-icon class="star-item mr-2 pointer" @click="updateStarred(item.id, '0')" icon="star-fill" v-if="item.is_starred === '1'"></b-icon>
               <b-icon class="star-item mr-2 pointer" @click="updateStarred(item.id, '1')" icon="star" v-if="item.is_starred === '0'"></b-icon>
               <a class="feed-item" :href="item.url" target="_blank" @click="goToItem($event, item.id)">{{ item.title }}</a>
+
             </span>
           </span>
           <span>
@@ -58,6 +59,11 @@ export default {
     }
   },
   methods: {
+    itemDate: function(date) {
+      const intl = new Intl.DateTimeFormat('en-US', { dateStyle: 'long',  });
+
+      return intl.format(new Date(date))
+    },
     goToItem: function (event, id) {
       const params = `?id=${id}`
 
