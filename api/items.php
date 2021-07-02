@@ -20,6 +20,8 @@ $site = "diff";
 $data = array();
 
 while ($row = $result->fetch_assoc()) {
+  $row['title'] = html_entity_decode($row['title'], ENT_QUOTES, 'UTF-8');
+
   array_push($data, $row);
 }
 
