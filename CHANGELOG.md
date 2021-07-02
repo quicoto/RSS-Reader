@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+
+- Add new param to the insert new feed
+
 ## 1.1.0
 
 - Add a "last fetched url" so we can safely remove read items (via cronjob or otherwise) without fear of re-fetching already fetched items.
