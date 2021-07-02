@@ -13,11 +13,11 @@
           class="d-flex justify-content-between align-items-center"
           v-for="feed in feeds"
           v-bind:key="feed.id">
-         <span>
-           {{ feed.title }}
-           {{ feed.url }}
-         </span>
-         <b-button variant="danger" @click="deleteFeed(feed.id)">Delete</b-button>
+          <div>
+            <p class="mb-1"><strong>{{ feed.title }}</strong></p>
+            <p class="mb-0"><a :href="feed.url" :title="feed.title">{{ feed.url }}</a></p>
+          </div>
+          <b-button variant="danger" @click="deleteFeed(feed.id)">Delete</b-button>
         </b-list-group-item>
       </b-list-group>
     </b-overlay>
