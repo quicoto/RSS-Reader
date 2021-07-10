@@ -29,7 +29,6 @@ CREATE TABLE IF NOT EXISTS `feeds` (
 	`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`title` text,
 	`url` text,
-	`last_item_url` text,
 	PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2686 ;
 ```
