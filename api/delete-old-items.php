@@ -3,7 +3,7 @@ require(__DIR__.'/_connection.php');
 require(__DIR__.'/../values.php');
 
 $query_feeds = "SELECT * from ".$table_feeds;
-$feeds = $mysqli->query($feeds_query);
+$feeds = $mysqli->query($query_feeds);
 
 while ($feed = $feeds->fetch_assoc()) {
   // Always leave the 10 newest items
