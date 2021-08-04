@@ -17,7 +17,7 @@ $row = $check->fetch_assoc();
 
 if (empty($row)) {
   $insert = sprintf(
-    "INSERT INTO feeds (title, url, last_item_url) VALUES ('%s', '%s', '')",
+    "INSERT INTO feeds (title, url) VALUES ('%s', '%s')",
     $mysqli->escape_string($xml->channel->title),
     $mysqli->escape_string($url)
   );
