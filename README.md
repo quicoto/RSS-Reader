@@ -1,3 +1,7 @@
+| :warning: Please notice          |
+|:---------------------------|
+| This repository is Archived. I could never make it work reliably, I would get random posts fetched. Thus I spent time cleaning out old items rather than reading new ones.      |
+
 # RSS Reader
 
 ![Screenshot](https://cldup.com/H43vRNLgta.png)
